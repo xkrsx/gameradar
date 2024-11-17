@@ -3,7 +3,7 @@ import type { Sql } from 'postgres';
 export async function up(sql: Sql) {
   await sql`
     CREATE TABLE venues (
-      id bigint NOT NULL,
+      id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
       name varchar(255) NOT NULL,
       location varchar(255) NOT NULL,
       latitude varchar(255) NOT NULL,
