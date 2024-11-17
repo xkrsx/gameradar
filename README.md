@@ -3,7 +3,7 @@
 The GameRadar is a full-stack web application where users can add and browse events based on sports.
 It is a part of Sportradar Code Academy Coding Exercise (BE).
 
-![db_sample](https://github.com/user-attachments/assets/59e45ac6-a2b7-42b9-a76e-3bfc06b9494b)
+![db_sample](https://github.com/user-attachments/assets/e3603516-af47-4ddd-9d4f-6b06f53ea24d)
 
 ## Technologies
 
