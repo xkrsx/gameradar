@@ -1,4 +1,27 @@
 import type { Sql } from 'postgres';
+import { z } from 'zod';
+
+export type Guest = {
+  id: number;
+  email: string;
+  createdAt: Date;
+};
+
+// // ready for registration
+// export type NewUser = {
+//   id: number;
+//   username: string;
+//   email: string;
+//   createdAt: Date;
+// };
+
+export const guestSchema = z.object({
+  email: z
+    .string()
+    .min(3, { message: 'E-mail must have at least 3 characters.' })
+    .max(80, { message: 'E-mail must have maximum 80 characters.' })
+    .email({ message: 'E-mail must be a valid address.' }),
+});
 
 export async function up(sql: Sql) {
   await sql`
