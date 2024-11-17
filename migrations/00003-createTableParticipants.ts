@@ -5,8 +5,8 @@ export async function up(sql: Sql) {
     CREATE TABLE participants (
       id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
       name varchar(255) NOT NULL UNIQUE,
-      sport_id integer NOT NULL REFERENCES sports (id) ON DELETE cascade,
-      venue_id integer NULL REFERENCES venues (id) ON DELETE cascade,
+      _sport_id integer NOT NULL REFERENCES sports (id),
+      _venue_id integer NULL REFERENCES venues (id),
       slug varchar(255) NULL
     );
   `;
