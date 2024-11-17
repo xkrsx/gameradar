@@ -1,5 +1,14 @@
 import type { Sql } from 'postgres';
 
+export type Venue = {
+  id: number;
+  name: string;
+  location: string;
+  latitude: string;
+  longitude: string;
+  slug: string | null;
+};
+
 export async function up(sql: Sql) {
   await sql`
     CREATE TABLE venues (

@@ -1,5 +1,11 @@
 import type { Sql } from 'postgres';
 
+export type Sport = {
+  id: number;
+  name: string;
+  slug: string | null;
+};
+
 export async function up(sql: Sql) {
   await sql`
     CREATE TABLE sports (

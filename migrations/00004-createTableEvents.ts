@@ -1,5 +1,19 @@
 import type { Sql } from 'postgres';
 
+export type Event = {
+  id: number;
+  name: string;
+  sportId: number;
+  part1Id: number;
+  part2Id: number;
+  timeStart: Date;
+  venueId: number | null;
+  description: string | null;
+  tickets: string | null;
+  userId: number;
+  slug: string | null;
+};
+
 export async function up(sql: Sql) {
   await sql`
     CREATE TABLE events (
