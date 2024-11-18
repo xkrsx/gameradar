@@ -57,7 +57,7 @@ const events: NewEvent[] = [
   {
     eventName: 'Roger Federer vs Rafael Nadal - Grand Slam Final',
     eventSportId: 35, // Tennis
-    eventPart1Id: 9, // Roger Federer
+    eventPart1Id: 8, // Roger Federer
     eventPart2Id: 15, // Rafael Nadal
     eventTimeStart: '2024-11-22 14:00:00',
     eventVenueId: 7, // Roland Garros
