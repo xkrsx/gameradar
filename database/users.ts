@@ -6,14 +6,20 @@ import { sql } from './connect';
 export const createUserInsecure = cache(async (email: string) => {
   const [newUser] = await sql<Guest[]>`
     INSERT INTO
-      users (username)
+      users (
+        email,
+        username,
+        password_hash
+      )
     VALUES
       (
         ${email.toLowerCase()},
+        '',
+        ''
       )
     RETURNING
       users.id,
-      users.username
+      users.email
   `;
   return newUser;
 });

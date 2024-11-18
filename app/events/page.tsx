@@ -3,6 +3,7 @@ import { getAllEventsInsecure } from '../../database/events';
 
 export default async function EventsPage() {
   const events = await getAllEventsInsecure();
+  console.log('events: ', events);
   return (
     <div className="wrapper">
       <h1>Browse all events</h1>
@@ -31,10 +32,13 @@ export default async function EventsPage() {
           <ul>
             {events.map((event) => (
               <li>
-                <Link key={`id-${event.id}`} href={`/events/${event.id}`}>
-                  {!event.name
-                    ? `Game ${event.part1} vs ${event.part2}`
-                    : event.name}
+                <Link
+                  key={`id-${event.eventId}`}
+                  href={`/events/${event.eventId}`}
+                >
+                  {!event.eventName
+                    ? `Game ${event.part1Name} vs ${event.part2Name}`
+                    : event.eventName}
                 </Link>
               </li>
             ))}

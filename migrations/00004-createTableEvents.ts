@@ -19,31 +19,32 @@ export const eventSchema = z.object({
     .nullable(),
   tickets: z.string().nullable(),
   slug: z.string().nullable(),
+  userId: z.number(),
 });
 
 export type NewEvent = {
-  name: string;
-  sportId: number;
-  part1Id: number;
-  part2Id: number;
-  timeStart: string;
-  venueId: number | null;
-  description: string | null;
-  tickets: string | null;
-  slug: string | null;
+  eventName: string;
+  eventSportId: number;
+  eventPart1Id: number;
+  eventPart2Id: number;
+  eventTimeStart: string;
+  eventVenueId: number | null;
+  eventDescription: string | null;
+  eventTickets: string | null;
+  eventSlug: string | null;
+  eventUserId: number;
 };
 
 export type Event = NewEvent & {
-  id: number;
-  userId: number;
+  eventId: number;
 };
 
 export type FullEvent = Event & {
-  sport: string;
-  part1: string;
-  part2: string;
-  venue: string;
-  user: string;
+  sportName: string;
+  part1Name: string;
+  part2Name: string;
+  venueName: string;
+  userUsername: string;
 };
 
 export async function up(sql: Sql) {

@@ -1,3 +1,9 @@
+import Nav from '../Nav/Nav';
+
 export default function Header() {
-  return <div>header</div>;
+  return (
+    <div>
+      <Nav />
+    </div>
+  );
 }

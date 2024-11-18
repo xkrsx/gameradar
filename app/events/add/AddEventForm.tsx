@@ -2,13 +2,15 @@
 
 import { useRouter } from 'next/navigation';
 import { type ChangeEvent, useState } from 'react';
-import { createEventInsecure } from '../../../database/events';
-import { getAllSportsInsecure } from '../../../database/sports';
 import type { Sport } from '../../../migrations/00001-createTableSports';
+import type { Venue } from '../../../migrations/00002-createTableVenues';
+import type { Participant } from '../../../migrations/00003-createTableParticipants';
 import ErrorMessage from '../../ErrorMessage';
 
 type Props = {
   sports: Sport[];
+  participants: Participant[];
+  venues: Venue[];
 };
 
 export default function AddEventForm(props: Props) {
@@ -22,6 +24,7 @@ export default function AddEventForm(props: Props) {
     description: '',
     tickets: '',
     slug: '',
+    email: '',
   });
   const [errorMessage, setErrorMessage] = useState('');
   const [isDisabled, setIsDisabled] = useState(false);
@@ -86,7 +89,7 @@ export default function AddEventForm(props: Props) {
           onSubmit={async (event) => {
             // eslint error: no preventDefault() even though there is one in called function
             event.preventDefault();
-            // await handleCreate(event);
+            await handleCreate(event);
           }}
         >
           <label>
@@ -97,6 +100,54 @@ export default function AddEventForm(props: Props) {
               value={newEvent.name}
               onChange={handleChange}
             />
+          </label>
+          <label>
+            Sport
+            <select name="sportId" onChange={handleChange}>
+              <option defaultValue="true" hidden disabled />
+
+              {props.sports.map((sport) => {
+                return (
+                  <option key={`option-key-${sport.name}`} value={sport.id}>
+                    {sport.name}
+                  </option>
+                );
+              })}
+            </select>
+          </label>
+          <label>
+            Participant 1
+            <select name="part1Id" onChange={handleChange}>
+              <option defaultValue="true" hidden disabled />
+
+              {props.participants.map((participant) => {
+                return (
+                  <option
+                    key={`option-key-${participant.name}`}
+                    value={participant.id}
+                  >
+                    {participant.name}
+                  </option>
+                );
+              })}
+            </select>
+          </label>
+          <label>
+            Participant 2
+            <select name="part2Id" onChange={handleChange}>
+              <option defaultValue="true" hidden disabled />
+
+              {props.participants.map((participant) => {
+                return (
+                  <option
+                    key={`option-key-${participant.name}`}
+                    value={participant.id}
+                  >
+                    {participant.name}
+                  </option>
+                );
+              })}
+            </select>
           </label>
           <label>
             Start time
@@ -110,18 +161,27 @@ export default function AddEventForm(props: Props) {
             />
           </label>
           <label>
-            Category
-            <select name="sports" onChange={handleChange}>
+            Venue
+            <select name="venueId" onChange={handleChange}>
               <option defaultValue="true" hidden disabled />
 
-              {props.sports.map((sport) => {
+              {props.venues.map((venue) => {
                 return (
-                  <option key={`option-key-${sport.name}`} value={sport.name}>
-                    {sport.name}
+                  <option key={`option-key-${venue.name}`} value={venue.id}>
+                    {venue.name}
                   </option>
                 );
               })}
             </select>
+          </label>
+          <label>
+            Tickets €
+            <input
+              name="tickets"
+              type="number"
+              value={newEvent.tickets}
+              onChange={handleChange}
+            />
           </label>
           <label>
             Description
@@ -129,6 +189,14 @@ export default function AddEventForm(props: Props) {
               name="description"
               required
               value={newEvent.description}
+              onChange={handleChange}
+            />
+          </label>
+          <label>
+            your email
+            <input
+              name="email"
+              value={newEvent.email}
               onChange={handleChange}
             />
           </label>

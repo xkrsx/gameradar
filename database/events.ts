@@ -18,19 +18,21 @@ export const createEventInsecure = cache(async (event: NewEvent) => {
         _venue_id,
         description,
         tickets,
-        slug
-      ),
+        slug,
+        _user_id
+      )
     VALUES
       (
-        ${event.name.toLocaleLowerCase()},
-        ${event.sportId},
-        ${event.part1Id},
-        ${event.part2Id},
-        ${event.timeStart},
-        ${event.venueId},
-        ${event.description},
-        ${event.tickets},
-        ${event.slug ? event.slug.toLowerCase() : null},
+        ${event.eventName},
+        ${event.eventSportId},
+        ${event.eventPart1Id},
+        ${event.eventPart2Id},
+        ${event.eventTimeStart},
+        ${event.eventVenueId},
+        ${event.eventDescription},
+        ${event.eventTickets},
+        '',
+        ${event.eventUserId}
       )
     RETURNING
       events.id,
@@ -42,13 +44,15 @@ export const createEventInsecure = cache(async (event: NewEvent) => {
       events._venue_id,
       events.description,
       events.tickets,
+      events.slug,
+      events._user_id
   `;
   return newEvent;
 });
 
 // retrieves all events from the database
 export const getAllEventsInsecure = cache(async () => {
-  const event = await sql<FullEvent[]>`
+  const events = await sql<FullEvent[]>`
     SELECT
       events.id AS event_id,
       events.name AS event_name,
@@ -59,16 +63,21 @@ export const getAllEventsInsecure = cache(async () => {
       events._venue_id AS event_venue_id,
       events.description AS event_description,
       events.tickets AS event_tickets,
-      events._user_id AS event_user_id
+      events._user_id AS event_user_id,
+      sports.name AS sport_name,
+      part1.name AS part1_name,
+      part2.name AS part2_name,
+      venues.name AS venue_name,
+      users.username AS user_username
     FROM
       events
       LEFT JOIN sports ON sports.id = events._sport_id
-      LEFT JOIN participants ON participants.id = events._part1_id
-      AND participants.id = events._part2_id
+      LEFT JOIN participants AS part1 ON part1.id = events._part1_id
+      LEFT JOIN participants AS part2 ON part2.id = events._part2_id
       LEFT JOIN venues ON venues.id = events._venue_id
       LEFT JOIN users ON users.id = events._user_id
   `;
-  return event;
+  return events;
 });
 
 // retrieves an event from the database by id
@@ -84,16 +93,21 @@ export const getSingleEventByIdInsecure = cache(async (id: number) => {
       events._venue_id AS event_venue_id,
       events.description AS event_description,
       events.tickets AS event_tickets,
-      events._user_id AS event_user_id
+      events._user_id AS event_user_id,
+      sports.name AS sport_name,
+      part1.name AS part1_name,
+      part2.name AS part2_name,
+      venues.name AS venue_name,
+      users.username AS user_username
     FROM
       events
       LEFT JOIN sports ON sports.id = events._sport_id
-      LEFT JOIN participants ON participants.id = events._part1_id
-      AND participants.id = events._part2_id
+      LEFT JOIN participants AS part1 ON part1.id = events._part1_id
+      LEFT JOIN participants AS part2 ON part2.id = events._part2_id
       LEFT JOIN venues ON venues.id = events._venue_id
       LEFT JOIN users ON users.id = events._user_id
     WHERE
-      events.event_id = ${id}
+      events.id = ${id}
   `;
   return event;
 });

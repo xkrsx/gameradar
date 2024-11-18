@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation';
 import { getSingleEventByIdInsecure } from '../../../database/events';
-import type { fullEvent } from '../../../migrations/00004-createTableEvents';
 import SingleEvent from '../../common/SingleEvent/SingleEvent';
 
 export async function generateMetadata(props: Props) {
