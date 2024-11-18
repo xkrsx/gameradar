@@ -5,7 +5,6 @@ import {
   getAllVenuesInsecure,
   getSingleVenueByIdInsecure,
 } from '../../../database/venues';
-import type { fullEvent } from '../../../migrations/00004-createTableEvents';
 import SingleEvent from '../../common/SingleEvent/SingleEvent';
 
 export async function generateMetadata(props: Props) {
@@ -37,7 +36,7 @@ export default async function VenuePage(props: Props) {
   if (!singleVenue) {
     notFound();
   }
-  const events = await getAllEventsByVenueInsecure(singleVenue.id);
+  const events = await getAllEventsByVenueInsecure(singleVenue.id!);
 
   return (
     <div>
@@ -67,12 +66,15 @@ export default async function VenuePage(props: Props) {
         </div>
       ) : (
         <ul>
-          {events.map((event: fullEvent) => (
+          {events.map((event) => (
             <li>
-              <Link key={`id-${event.id}`} href={`/events/${event.id}`}>
-                {!event.name
-                  ? `Game ${event.part1} vs ${event.part2}`
-                  : event.name}
+              <Link
+                key={`id-${event.eventId}`}
+                href={`/events/${event.eventId}`}
+              >
+                {!event.eventName
+                  ? `Game ${event.part1Name} vs ${event.part2Name}`
+                  : event.eventName}
               </Link>
             </li>
           ))}

@@ -1,9 +1,9 @@
-import { create } from 'domain';
-import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
-import type { ZodIssue } from 'zod';
 import { createEventInsecure } from '../../../database/events';
-import { createUserInsecure } from '../../../database/users';
+import {
+  createUserInsecure,
+  getUserByEmailInsecure,
+} from '../../../database/users';
 import {
   eventSchema,
   type NewEvent,
@@ -21,11 +21,16 @@ export async function POST(
   const requestBody: NewEvent & { eventUserEmail: string } =
     await request.json();
 
-  console.log('requestBody:', requestBody);
+  let newUser = undefined;
 
-  const newUser = await createUserInsecure(requestBody.eventUserEmail);
-
-  console.log('newUser:', newUser);
+  const checkUserEmail = await getUserByEmailInsecure(
+    requestBody.eventUserEmail,
+  );
+  if (!checkUserEmail) {
+    newUser = (await createUserInsecure(requestBody.eventUserEmail))!.id;
+  } else {
+    newUser = checkUserEmail.id;
+  }
 
   const { eventUserEmail, ...remainingRequestBody } = requestBody;
 
@@ -35,15 +40,11 @@ export async function POST(
     eventPart1Id: Number(requestBody.eventPart1Id),
     eventPart2Id: Number(requestBody.eventPart2Id),
     eventVenueId: Number(requestBody.eventVenueId),
-    eventUserId: Number(newUser!.id),
+    eventUserId: Number(newUser),
   };
-
-  console.log('updatedBody:', updatedBody);
 
   // Validation schema for request body
   const result = eventSchema.safeParse(updatedBody);
-
-  console.log('result:', result);
 
   // If client sends request body with incorrect data,
   // return a response with a 400 status code to the client
@@ -69,8 +70,6 @@ export async function POST(
     eventSlug: result.data.eventSlug,
     eventUserId: result.data.eventUserId,
   });
-
-  console.log('newEvent:', newEvent);
 
   if (!newEvent) {
     return NextResponse.json(

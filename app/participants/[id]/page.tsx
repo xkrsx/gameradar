@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getAllEventsByParticipantInsecure } from '../../../database/events';
 import { getSingleParticipantByIdInsecure } from '../../../database/participants';
-import type { fullEvent } from '../../../migrations/00004-createTableEvents';
 
 export async function generateMetadata(props: Props) {
   const singleParticipant = await getSingleParticipantByIdInsecure(
@@ -63,12 +62,15 @@ export default async function ParticipantPage(props: Props) {
         </div>
       ) : (
         <ul>
-          {events.map((event: fullEvent) => (
+          {events.map((event) => (
             <li>
-              <Link key={`id-${event.id}`} href={`/events/${event.id}`}>
-                {!event.name
-                  ? `Game ${event.part1} vs ${event.part2}`
-                  : event.name}
+              <Link
+                key={`id-${event.eventId}`}
+                href={`/events/${event.eventId}`}
+              >
+                {!event.eventName
+                  ? `Game ${event.part1Name} vs ${event.part2Name}`
+                  : event.eventName}
               </Link>
             </li>
           ))}

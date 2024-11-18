@@ -3,7 +3,6 @@ import { getAllEventsInsecure } from '../../database/events';
 
 export default async function EventsPage() {
   const events = await getAllEventsInsecure();
-  console.log('events: ', events);
   return (
     <div className="wrapper">
       <h1>Browse all events</h1>

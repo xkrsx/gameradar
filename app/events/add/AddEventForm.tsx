@@ -202,6 +202,7 @@ export default function AddEventForm(props: Props) {
               onChange={handleChange}
             />
           </label>
+          <p>your email is always saved to our database.</p>
           <button className="button-confirm" disabled={isDisabled}>
             Add event
           </button>

@@ -2,10 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getAllEventsBySportInsecure } from '../../../database/events';
 import { getSingleSportBySlugInsecure } from '../../../database/sports';
-import type {
-  Event,
-  fullEvent,
-} from '../../../migrations/00004-createTableEvents';
+import type { Event } from '../../../migrations/00004-createTableEvents';
 import SingleEvent from '../../common/SingleEvent/SingleEvent';
 
 export async function generateMetadata(props: Props) {
@@ -67,12 +64,15 @@ export default async function SportPage(props: Props) {
         </div>
       ) : (
         <ul>
-          {events.map((event: fullEvent) => (
+          {events.map((event) => (
             <li>
-              <Link key={`id-${event.id}`} href={`/events/${event.id}`}>
-                {!event.name
-                  ? `Game ${event.part1} vs ${event.part2}`
-                  : event.name}
+              <Link
+                key={`id-${event.eventId}`}
+                href={`/events/${event.eventId}`}
+              >
+                {!event.eventName
+                  ? `Game ${event.part1Name} vs ${event.part2Name}`
+                  : event.eventName}
               </Link>
             </li>
           ))}
