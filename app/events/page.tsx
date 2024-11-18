@@ -21,7 +21,7 @@ export default async function EventsPage() {
               <div className="bg-white p-6 rounded-lg shadow-lg hover:bg-blue-50 hover:scale-105 transition-all">
                 <div className="text-lg font-medium text-gray-800 text-center">
                   {!event.eventName
-                    ? `Game ${event.part1Name} vs ${event.part2Name}`
+                    ? `${event.part1Name} vs ${event.part2Name}`
                     : event.eventName}
                 </div>
               </div>

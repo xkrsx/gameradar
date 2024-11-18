@@ -34,7 +34,6 @@ export default function AddEventForm(props: Props) {
 
   async function handleCreate(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    checkForm();
 
     const response = await fetch('/api/events/', {
       method: 'POST',
@@ -51,21 +50,6 @@ export default function AddEventForm(props: Props) {
     }
     if ('event' in data) {
       router.push(`/events/${data.event.id}`);
-    }
-  }
-
-  function checkForm() {
-    if (newEvent.eventName.length < 3) {
-      setErrorMessage('Event name must have at least 3 characters.');
-    }
-    if (newEvent.eventName.length >= 255) {
-      setErrorMessage('Event name must have maximum 255 characters.');
-    }
-    if (newEvent.eventDescription.length < 3) {
-      setErrorMessage('Event description must have at least 3 characters.');
-    }
-    if (newEvent.eventName.length >= 3 && newEvent.eventName.length <= 255) {
-      setIsDisabled(false);
     }
   }
 

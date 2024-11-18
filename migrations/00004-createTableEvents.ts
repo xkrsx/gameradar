@@ -2,21 +2,13 @@ import type { Sql } from 'postgres';
 import { z } from 'zod';
 
 export const eventSchema = z.object({
-  eventName: z
-    .string()
-    .min(2, { message: 'Event name must have at least 3 characters.' })
-    .max(255, { message: 'Event name must have maximum 255 characters.' }),
+  eventName: z.string().optional(),
   eventSportId: z.number(),
   eventPart1Id: z.number(),
   eventPart2Id: z.number(),
   eventTimeStart: z.string(),
   eventVenueId: z.number().nullable(),
-  eventDescription: z
-    .string()
-    .min(3, {
-      message: 'Event description must have at least 3 characters.',
-    })
-    .nullable(),
+  eventDescription: z.string().nullable(),
   eventTickets: z.string().nullable(),
   eventSlug: z.string().nullable(),
   eventUserId: z.number(),
@@ -30,7 +22,7 @@ export type NewEvent = {
   eventTimeStart: string;
   eventVenueId: number | null;
   eventDescription: string | null;
-  eventTickets: string | null;
+  eventTickets: number | null;
   eventSlug: string | null;
   eventUserId: number;
 };
@@ -54,8 +46,8 @@ export async function up(sql: Sql) {
       id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
       name varchar(255) NULL,
       _sport_id integer NOT NULL REFERENCES sports (id),
-      _part1_id integer NOT NULL REFERENCES participants (id),
-      _part2_id integer NOT NULL REFERENCES participants (id),
+      _part1_id integer NOT NULL REFERENCES participants (id) ON DELETE cascade,
+      _part2_id integer NOT NULL REFERENCES participants (id) ON DELETE cascade,
       time_start TIMESTAMP WITHOUT TIME ZONE NOT NULL,
       _venue_id integer NOT NULL REFERENCES venues (id),
       description text NULL,
