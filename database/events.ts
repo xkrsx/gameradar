@@ -45,8 +45,19 @@ export const createEventInsecure = cache(async (event: Omit<Event, 'id'>) => {
   return newEvent;
 });
 
+// retrieves all events from the database
+export const getAllEventsInsecure = cache(async () => {
+  const [event] = await sql<Event[]>`
+    SELECT
+      *
+    FROM
+      events
+  `;
+  return event;
+});
+
 // retrieves an event from the database by name
-export const getEventByNameInsecure = cache(async (name: string) => {
+export const getSingleEventByNameInsecure = cache(async (name: string) => {
   const [event] = await sql<Event[]>`
     SELECT
       events.id,
@@ -57,13 +68,14 @@ export const getEventByNameInsecure = cache(async (name: string) => {
     FROM
       events
     WHERE
-      name = ${name.toLocaleLowerCase()}
+      events.name = ${name.toLocaleLowerCase()}
   `;
   return event;
 });
 
+// // TODO join
 // retrieves an event from the database by sport
-export const getEventBySportInsecure = cache(async (sport: string) => {
+export const getAllEventsBySportInsecure = cache(async (sport: string) => {
   const [event] = await sql<Event[]>`
     SELECT
       events.id,
@@ -80,6 +92,29 @@ export const getEventBySportInsecure = cache(async (sport: string) => {
       events
     WHERE
       name = ${sport}
+  `;
+  return event;
+});
+
+// // TODO join
+// retrieves an event from the database by sport
+export const getAllEventsByVenueInsecure = cache(async (venue: string) => {
+  const [event] = await sql<Event[]>`
+    SELECT
+      events.id,
+      events.name,
+      events._sport_id,
+      events._part1_id,
+      events._part2_id,
+      events.time_start,
+      events._venue_id,
+      events.description,
+      events.tickets,
+      events._user_id
+    FROM
+      events
+    WHERE
+      name = ${venue}
   `;
   return event;
 });

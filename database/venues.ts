@@ -15,9 +15,9 @@ export const createVenueInsecure = cache(async (venue: Omit<Venue, 'id'>) => {
     VALUES
       (
         ${venue.name.toLowerCase()},
-        ${venue.location.toLowerCase()},
-        ${venue.latitude.toLowerCase()},
-        ${venue.longitude.toLowerCase()},
+        ${venue.location},
+        ${venue.latitude},
+        ${venue.longitude},
         ${venue.slug ? venue.slug.toLowerCase() : null},
       )
     RETURNING
