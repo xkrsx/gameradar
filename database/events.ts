@@ -47,11 +47,52 @@ export const createEventInsecure = cache(async (event: Omit<Event, 'id'>) => {
 
 // retrieves all events from the database
 export const getAllEventsInsecure = cache(async () => {
-  const [event] = await sql<Event[]>`
+  const event = await sql<fullEvent[]>`
     SELECT
-      *
+      events.id AS event_id,
+      events.name AS event_name,
+      events._sport_id AS event_sport_id,
+      events._part1_id AS event_part1_id,
+      events._part2_id AS event_part2_id,
+      events.time_start AS event_time_start,
+      events._venue_id AS event_venue_id,
+      events.description AS event_description,
+      events.tickets AS event_tickets,
+      events._user_id AS event_user_id
     FROM
       events
+      LEFT JOIN sports ON sports.id = events._sport_id
+      LEFT JOIN participants ON participants.id = events._part1_id
+      AND participants.id = events._part2_id
+      LEFT JOIN venues ON venues.id = events._venue_id
+      LEFT JOIN users ON users.id = events._user_id
+  `;
+  return event;
+});
+
+// retrieves an event from the database by id
+export const getSingleEventByIdInsecure = cache(async (id: number) => {
+  const [event] = await sql<fullEvent[]>`
+    SELECT
+      events.id AS event_id,
+      events.name AS event_name,
+      events._sport_id AS event_sport_id,
+      events._part1_id AS event_part1_id,
+      events._part2_id AS event_part2_id,
+      events.time_start AS event_time_start,
+      events._venue_id AS event_venue_id,
+      events.description AS event_description,
+      events.tickets AS event_tickets,
+      events._user_id AS event_user_id
+    FROM
+      events
+      LEFT JOIN sports ON sports.id = events._sport_id
+      LEFT JOIN participants ON participants.id = events._part1_id
+      AND participants.id = events._part2_id
+      LEFT JOIN venues ON venues.id = events._venue_id
+      LEFT JOIN users ON users.id = events._user_id
+    WHERE
+      events.event_id = ${id}
   `;
   return event;
 });
