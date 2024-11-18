@@ -100,7 +100,7 @@ export const getAllEventsBySportInsecure = cache(async (id: number) => {
   return event;
 });
 
-// retrieves all events from the database by sport
+// retrieves all events from the database by venue
 export const getAllEventsByVenueInsecure = cache(async (id: number) => {
   const event = await sql<fullEvent[]>`
     SELECT
@@ -123,6 +123,34 @@ export const getAllEventsByVenueInsecure = cache(async (id: number) => {
       LEFT JOIN users ON users.id = events._user_id
     WHERE
       events._venue_id = ${id}
+  `;
+  return event;
+});
+
+// retrieves all events from the database by participant
+export const getAllEventsByParticipantInsecure = cache(async (id: number) => {
+  const event = await sql<fullEvent[]>`
+    SELECT
+      events.id AS event_id,
+      events.name AS event_name,
+      events._sport_id AS event_sport_id,
+      events._part1_id AS event_part1_id,
+      events._part2_id AS event_part2_id,
+      events.time_start AS event_time_start,
+      events._venue_id AS event_venue_id,
+      events.description AS event_description,
+      events.tickets AS event_tickets,
+      events._user_id AS event_user_id
+    FROM
+      events
+      LEFT JOIN sports ON sports.id = events._sport_id
+      LEFT JOIN participants ON participants.id = events._part1_id
+      AND participants.id = events._part2_id
+      LEFT JOIN venues ON venues.id = events._venue_id
+      LEFT JOIN users ON users.id = events._user_id
+    WHERE
+      events._part1_id = ${id}
+      OR events._part2_id = ${id}
   `;
   return event;
 });

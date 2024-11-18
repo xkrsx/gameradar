@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getAllEventsBySportInsecure } from '../../../database/events';
 import { getSingleSportBySlugInsecure } from '../../../database/sports';
@@ -65,9 +66,17 @@ export default async function SportPage(props: Props) {
           </ul>
         </div>
       ) : (
-        events.map((event: fullEvent) => (
-          <SingleEvent key={`id-${event.id}`} event={event} />
-        ))
+        <ul>
+          {events.map((event: fullEvent) => (
+            <li>
+              <Link key={`id-${event.id}`} href={`/events/${event.id}`}>
+                {!event.name
+                  ? `Game ${event.part1} vs ${event.part2}`
+                  : event.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );
