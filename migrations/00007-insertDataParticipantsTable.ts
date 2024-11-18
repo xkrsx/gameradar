@@ -82,7 +82,7 @@ export async function up(sql: Sql) {
         (
           ${participant.name},
           ${participant.team},
-          ${participant.sportId},
+          14,
           ${participant.venueId},
           ${participant.slug}
         )

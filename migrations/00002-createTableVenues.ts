@@ -1,7 +1,7 @@
 import type { Sql } from 'postgres';
 
 export type Venue = {
-  id: number;
+  id?: number;
   name: string;
   location: string;
   latitude: string;
