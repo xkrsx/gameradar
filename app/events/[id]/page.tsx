@@ -22,6 +22,7 @@ type Props = {
     id: string;
   }>;
 };
+
 export default async function EventPage(props: Props) {
   const event = await getSingleEventByIdInsecure(
     Number((await props.params).id),
@@ -32,8 +33,7 @@ export default async function EventPage(props: Props) {
   }
 
   return (
-    <div>
-      <h1>Event</h1>
+    <div className="my-8">
       <SingleEvent event={event} />
     </div>
   );

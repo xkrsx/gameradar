@@ -11,6 +11,14 @@ export default async function AddEvent() {
   const venues = await getAllVenuesInsecure();
 
   return (
-    <AddEventForm sports={sports} participants={participants} venues={venues} />
+    <div className="my-8">
+      <h1 className="text-3xl font-semibold mb-6">Add new Events</h1>
+
+      <AddEventForm
+        sports={sports}
+        participants={participants}
+        venues={venues}
+      />
+    </div>
   );
 }

@@ -82,130 +82,218 @@ export default function AddEventForm(props: Props) {
   }
 
   return (
-    <div>
-      <h1>Add event</h1>
-      <div>
-        <form
-          onSubmit={async (event) => {
-            // eslint error: no preventDefault() even though there is one in called function
-            event.preventDefault();
-            await handleCreate(event);
-          }}
-        >
-          <label>
-            Name
-            <input
-              required
-              name="eventName"
-              value={newEvent.eventName}
-              onChange={handleChange}
-            />
+    <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+      <form
+        onSubmit={async (event) => {
+          event.preventDefault();
+          await handleCreate(event);
+        }}
+        className="space-y-6"
+      >
+        <div>
+          <label
+            htmlFor="eventName"
+            className="block text-lg font-medium text-gray-600 mb-2"
+          >
+            Event Name
           </label>
-          <label>
+          <input
+            id="eventName"
+            name="eventName"
+            type="text"
+            value={newEvent.eventName}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <div>
+          <label
+            htmlFor="eventSportId"
+            className="block text-lg font-medium text-gray-600 mb-2"
+          >
             Sport
-            <select name="eventSportId" onChange={handleChange}>
-              <option defaultValue="true" hidden disabled />
-
-              {props.sports.map((sport) => {
-                return (
-                  <option key={`option-key-${sport.name}`} value={sport.id}>
-                    {sport.name}
-                  </option>
-                );
-              })}
-            </select>
           </label>
-          <label>
+          <select
+            id="eventSportId"
+            name="eventSportId"
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="" hidden disabled>
+              Select a sport
+            </option>
+            {props.sports.map((sport) => (
+              <option key={`sport-${sport.id}`} value={sport.id}>
+                {sport.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label
+            htmlFor="eventPart1Id"
+            className="block text-lg font-medium text-gray-600 mb-2"
+          >
             Participant 1
-            <select name="eventPart1Id" onChange={handleChange}>
-              <option defaultValue="true" hidden disabled />
-
-              {props.participants.map((participant) => {
-                return (
-                  <option
-                    key={`option-key-${participant.name}`}
-                    value={participant.id}
-                  >
-                    {participant.name}
-                  </option>
-                );
-              })}
-            </select>
           </label>
-          <label>
+          <select
+            id="eventPart1Id"
+            name="eventPart1Id"
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="" hidden disabled>
+              Select participant 1
+            </option>
+            {props.participants.map((participant) => (
+              <option
+                key={`participant-1-${participant.id}`}
+                value={participant.id}
+              >
+                {participant.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label
+            htmlFor="eventPart2Id"
+            className="block text-lg font-medium text-gray-600 mb-2"
+          >
             Participant 2
-            <select name="eventPart2Id" onChange={handleChange}>
-              <option defaultValue="true" hidden disabled />
+          </label>
+          <select
+            id="eventPart2Id"
+            name="eventPart2Id"
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="" hidden disabled>
+              Select participant 2
+            </option>
+            {props.participants.map((participant) => (
+              <option
+                key={`participant-2-${participant.id}`}
+                value={participant.id}
+              >
+                {participant.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
-              {props.participants.map((participant) => {
-                return (
-                  <option
-                    key={`option-key-${participant.name}`}
-                    value={participant.id}
-                  >
-                    {participant.name}
-                  </option>
-                );
-              })}
-            </select>
+        <div>
+          <label
+            htmlFor="eventTimeStart"
+            className="block text-lg font-medium text-gray-600 mb-2"
+          >
+            Start Time
           </label>
-          <label>
-            Start time
-            <input
-              aria-label="Date and time"
-              type="datetime-local"
-              required
-              name="eventTimeStart"
-              value={newEvent.eventTimeStart}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
+          <input
+            id="eventTimeStart"
+            name="eventTimeStart"
+            type="datetime-local"
+            value={newEvent.eventTimeStart}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+          />
+        </div>
+
+        <div>
+          <label
+            htmlFor="eventVenueId"
+            className="block text-lg font-medium text-gray-600 mb-2"
+          >
             Venue
-            <select name="eventVenueId" onChange={handleChange}>
-              <option defaultValue="true" hidden disabled />
+          </label>
+          <select
+            id="eventVenueId"
+            name="eventVenueId"
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="" hidden disabled>
+              Select a venue
+            </option>
+            {props.venues.map((venue) => (
+              <option key={`venue-${venue.id}`} value={venue.id}>
+                {venue.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
-              {props.venues.map((venue) => {
-                return (
-                  <option key={`option-key-${venue.name}`} value={venue.id}>
-                    {venue.name}
-                  </option>
-                );
-              })}
-            </select>
+        <div>
+          <label
+            htmlFor="eventTickets"
+            className="block text-lg font-medium text-gray-600 mb-2"
+          >
+            Tickets (€)
           </label>
-          <label>
-            Tickets €
-            <input
-              name="eventTickets"
-              type="number"
-              value={newEvent.eventTickets}
-              onChange={handleChange}
-            />
+          <input
+            id="eventTickets"
+            name="eventTickets"
+            type="number"
+            value={newEvent.eventTickets}
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <div>
+          <label
+            htmlFor="eventDescription"
+            className="block text-lg font-medium text-gray-600 mb-2"
+          >
+            Event Description
           </label>
-          <label>
-            Description
-            <input
-              name="eventDescription"
-              required
-              value={newEvent.eventDescription}
-              onChange={handleChange}
-            />
+          <input
+            id="eventDescription"
+            name="eventDescription"
+            type="text"
+            value={newEvent.eventDescription}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <div>
+          <label
+            htmlFor="eventUserEmail"
+            className="block text-lg font-medium text-gray-600 mb-2"
+          >
+            Your Email
           </label>
-          <label>
-            your email
-            <input
-              type="email"
-              name="eventUserEmail"
-              value={newEvent.eventUserEmail}
-              onChange={handleChange}
-            />
-          </label>
-          <p>your email is always saved to our database.</p>
-          <button disabled={isDisabled}>Add event</button>
-        </form>
-        <ErrorMessage>{errorMessage}</ErrorMessage>
-      </div>
+          <input
+            id="eventUserEmail"
+            name="eventUserEmail"
+            type="email"
+            value={newEvent.eventUserEmail}
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <button
+          type="submit"
+          disabled={isDisabled}
+          className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition duration-200 disabled:bg-gray-400"
+        >
+          Add Event
+        </button>
+      </form>
+
+      <ErrorMessage>{errorMessage}</ErrorMessage>
     </div>
   );
 }

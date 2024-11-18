@@ -5,12 +5,22 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary: #3b82f6; /* Tailwind's blue color for primary actions */
+  --secondary: #64748b; /* Tailwind's gray-500 for secondary text */
+  --input-border: #d1d5db; /* Tailwind's gray-300 for input borders */
+  --button-bg: #3b82f6; /* Button primary background */
+  --button-bg-hover: #2563eb; /* Button hover background */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --primary: #60a5fa; /* Lighter blue for dark mode */
+    --secondary: #cbd5e1; /* Light gray for secondary text in dark mode */
+    --input-border: #4b5563; /* Darker border for inputs */
+    --button-bg: #2563eb; /* Button primary background */
+    --button-bg-hover: #1d4ed8; /* Button hover background in dark mode */
   }
 }
 
@@ -18,4 +28,122 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+/* Add padding and centering to the page */
+main {
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Global link styles */
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+  color: var(--button-bg-hover);
+}
+
+/* Global heading styles */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  color: var(--foreground);
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+h4,
+h5,
+h6 {
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+/* Form Elements */
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  border: 1px solid var(--input-border);
+  background: var(--background);
+  color: var(--foreground);
+  transition: border-color 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+/* Button Styling */
+button {
+  background-color: var(--button-bg);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 1rem;
+}
+
+button:disabled {
+  background-color: #d1d5db;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  background-color: var(--button-bg-hover);
+}
+
+/* Error message styles */
+.error-message {
+  color: #e11d48; /* Tailwind's red-600 for error */
+  background-color: #fef2f2; /* Tailwind's red-50 for background */
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  margin-top: 1rem;
+  border: 1px solid #e11d48;
+}
+
+/* Typography improvements for readability */
+p,
+li {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--secondary);
+}
+
+/* Container for main content */
+.container {
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
