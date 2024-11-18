@@ -14,6 +14,14 @@ export type Event = {
   slug: string | null;
 };
 
+export type fullEvent = Event & {
+  sport: string;
+  part1: string;
+  part2: string;
+  venue: string;
+  user: string;
+};
+
 export async function up(sql: Sql) {
   await sql`
     CREATE TABLE events (

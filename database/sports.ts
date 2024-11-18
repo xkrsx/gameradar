@@ -2,6 +2,17 @@ import { cache } from 'react';
 import type { Sport } from '../migrations/00001-createTableSports';
 import { sql } from './connect';
 
+// retrieves all sports from the database
+export const getAllSportsInsecure = cache(async () => {
+  const sports = await sql<Sport[]>`
+    SELECT
+      *
+    FROM
+      sports
+  `;
+  return sports;
+});
+
 // retrieves a sport from the database by id
 export const getSingleSportByIdInsecure = cache(async (id: number) => {
   const [sport] = await sql<Sport[]>`

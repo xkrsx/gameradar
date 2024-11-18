@@ -1,5 +1,5 @@
 import { cache } from 'react';
-import type { Event } from '../migrations/00004-createTableEvents';
+import type { Event, fullEvent } from '../migrations/00004-createTableEvents';
 import { sql } from './connect';
 
 export const createEventInsecure = cache(async (event: Omit<Event, 'id'>) => {
@@ -75,7 +75,7 @@ export const getSingleEventByNameInsecure = cache(async (name: string) => {
 
 // retrieves all events from the database by sport
 export const getAllEventsBySportInsecure = cache(async (id: number) => {
-  const event = await sql<Event[]>`
+  const event = await sql<fullEvent[]>`
     SELECT
       events.id AS event_id,
       events.name AS event_name,
@@ -102,7 +102,7 @@ export const getAllEventsBySportInsecure = cache(async (id: number) => {
 
 // retrieves all events from the database by sport
 export const getAllEventsByVenueInsecure = cache(async (id: number) => {
-  const event = await sql<Event[]>`
+  const event = await sql<fullEvent[]>`
     SELECT
       events.id AS event_id,
       events.name AS event_name,
@@ -118,7 +118,7 @@ export const getAllEventsByVenueInsecure = cache(async (id: number) => {
       events
       LEFT JOIN sports ON sports.id = events._sport_id
       LEFT JOIN participants ON participants.id = events._part1_id
-      LEFT JOIN participants ON participants.id = events._part2_id
+      AND participants.id = events._part2_id
       LEFT JOIN venues ON venues.id = events._venue_id
       LEFT JOIN users ON users.id = events._user_id
     WHERE
