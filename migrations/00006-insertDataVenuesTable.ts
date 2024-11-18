@@ -3,6 +3,8 @@ import type { Venue } from './00002-createTableVenues';
 import type { Participant } from './00003-createTableParticipants';
 
 const venues: Venue[] = [
+  { name: 'TBA', location: 'TBA', latitude: '', longitude: '', slug: null },
+
   {
     name: 'Camp Nou',
     location: 'Barcelona, Spain',
