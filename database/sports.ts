@@ -1,44 +1,29 @@
+import { cache } from 'react';
 import type { Sport } from '../migrations/00001-createTableSports';
+import { sql } from './connect';
 
-const sports: Sport[] = [
-  { id: 1, name: 'Archery', slug: 'archery' },
-  { id: 2, name: 'Badminton', slug: 'badminton' },
-  { id: 3, name: 'Baseball', slug: 'baseball' },
-  { id: 4, name: 'Basketball', slug: 'basketball' },
-  { id: 5, name: 'Beach Volleyball', slug: 'beach-volleyball' },
-  { id: 6, name: 'Boxing', slug: 'boxing' },
-  { id: 7, name: 'Cricket', slug: 'cricket' },
-  { id: 8, name: 'Cycling', slug: 'cycling' },
-  { id: 9, name: 'Diving', slug: 'diving' },
-  { id: 10, name: 'Equestrian', slug: 'equestrian' },
-  { id: 11, name: 'Fencing', slug: 'fencing' },
-  { id: 12, name: 'Field Hockey', slug: 'field-hockey' },
-  { id: 13, name: 'Figure Skating', slug: 'figure-skating' },
-  { id: 14, name: 'Football', slug: 'football' },
-  { id: 15, name: 'Golf', slug: 'golf' },
-  { id: 16, name: 'Gymnastics', slug: 'gymnastics' },
-  { id: 17, name: 'Handball', slug: 'handball' },
-  { id: 18, name: 'Ice Hockey', slug: 'ice-hockey' },
-  { id: 19, name: 'Judo', slug: 'judo' },
-  { id: 20, name: 'Karate', slug: 'karate' },
-  { id: 21, name: 'Martial Arts', slug: 'martial-arts' },
-  { id: 22, name: 'Rowing', slug: 'rowing' },
-  { id: 23, name: 'Rugby', slug: 'rugby' },
-  { id: 24, name: 'Sailing', slug: 'sailing' },
-  { id: 25, name: 'Shooting', slug: 'shooting' },
-  { id: 26, name: 'Skateboarding', slug: 'skateboarding' },
-  { id: 27, name: 'Skiing', slug: 'skiing' },
-  { id: 28, name: 'Snowboarding', slug: 'snowboarding' },
-  { id: 29, name: 'Soccer', slug: 'soccer' },
-  { id: 30, name: 'Softball', slug: 'softball' },
-  { id: 31, name: 'Surfing', slug: 'surfing' },
-  { id: 32, name: 'Swimming', slug: 'swimming' },
-  { id: 33, name: 'Table Tennis', slug: 'table-tennis' },
-  { id: 34, name: 'Taekwondo', slug: 'taekwondo' },
-  { id: 35, name: 'Tennis', slug: 'tennis' },
-  { id: 36, name: 'Track and Field', slug: 'track-and-field' },
-  { id: 37, name: 'Triathlon', slug: 'triathlon' },
-  { id: 38, name: 'Volleyball', slug: 'volleyball' },
-  { id: 39, name: 'Weightlifting', slug: 'weightlifting' },
-  { id: 40, name: 'Wrestling', slug: 'wrestling' },
-];
+// retrieves a sport from the database by id
+export const getSingleSportByIdInsecure = cache(async (id: number) => {
+  const [sport] = await sql<Sport[]>`
+    SELECT
+      *
+    FROM
+      sports
+    WHERE
+      sports.id = ${id}
+  `;
+  return sport;
+});
+
+// retrieves a sport from the database by slug
+export const getSingleSportBySlugInsecure = cache(async (slug: string) => {
+  const [sport] = await sql<Sport[]>`
+    SELECT
+      *
+    FROM
+      sports
+    WHERE
+      sports.slug = ${slug}
+  `;
+  return sport;
+});

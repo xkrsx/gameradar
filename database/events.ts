@@ -73,48 +73,56 @@ export const getSingleEventByNameInsecure = cache(async (name: string) => {
   return event;
 });
 
-// // TODO join
-// retrieves an event from the database by sport
-export const getAllEventsBySportInsecure = cache(async (sport: string) => {
-  const [event] = await sql<Event[]>`
+// retrieves all events from the database by sport
+export const getAllEventsBySportInsecure = cache(async (id: number) => {
+  const event = await sql<Event[]>`
     SELECT
-      events.id,
-      events.name,
-      events._sport_id,
-      events._part1_id,
-      events._part2_id,
-      events.time_start,
-      events._venue_id,
-      events.description,
-      events.tickets,
-      events._user_id
+      events.id AS event_id,
+      events.name AS event_name,
+      events._sport_id AS event_sport_id,
+      events._part1_id AS event_part1_id,
+      events._part2_id AS event_part2_id,
+      events.time_start AS event_time_start,
+      events._venue_id AS event_venue_id,
+      events.description AS event_description,
+      events.tickets AS event_tickets,
+      events._user_id AS event_user_id
     FROM
       events
+      LEFT JOIN sports ON sports.id = events._sport_id
+      LEFT JOIN participants ON participants.id = events._part1_id
+      AND participants.id = events._part2_id
+      LEFT JOIN venues ON venues.id = events._venue_id
+      LEFT JOIN users ON users.id = events._user_id
     WHERE
-      name = ${sport}
+      events._sport_id = ${id}
   `;
   return event;
 });
 
-// // TODO join
-// retrieves an event from the database by sport
-export const getAllEventsByVenueInsecure = cache(async (venue: string) => {
-  const [event] = await sql<Event[]>`
+// retrieves all events from the database by sport
+export const getAllEventsByVenueInsecure = cache(async (id: number) => {
+  const event = await sql<Event[]>`
     SELECT
-      events.id,
-      events.name,
-      events._sport_id,
-      events._part1_id,
-      events._part2_id,
-      events.time_start,
-      events._venue_id,
-      events.description,
-      events.tickets,
-      events._user_id
+      events.id AS event_id,
+      events.name AS event_name,
+      events._sport_id AS event_sport_id,
+      events._part1_id AS event_part1_id,
+      events._part2_id AS event_part2_id,
+      events.time_start AS event_time_start,
+      events._venue_id AS event_venue_id,
+      events.description AS event_description,
+      events.tickets AS event_tickets,
+      events._user_id AS event_user_id
     FROM
       events
+      LEFT JOIN sports ON sports.id = events._sport_id
+      LEFT JOIN participants ON participants.id = events._part1_id
+      LEFT JOIN participants ON participants.id = events._part2_id
+      LEFT JOIN venues ON venues.id = events._venue_id
+      LEFT JOIN users ON users.id = events._user_id
     WHERE
-      name = ${venue}
+      events._venue_id = ${id}
   `;
   return event;
 });
