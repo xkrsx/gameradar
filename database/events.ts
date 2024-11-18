@@ -1,9 +1,13 @@
 import { cache } from 'react';
-import type { Event, fullEvent } from '../migrations/00004-createTableEvents';
+import type {
+  Event,
+  FullEvent,
+  NewEvent,
+} from '../migrations/00004-createTableEvents';
 import { sql } from './connect';
 
-export const createEventInsecure = cache(async (event: Omit<Event, 'id'>) => {
-  const [newEvent] = await sql<Event[]>`
+export const createEventInsecure = cache(async (event: NewEvent) => {
+  const [newEvent] = await sql<NewEvent[]>`
     INSERT INTO
       events (
         name,
@@ -14,7 +18,6 @@ export const createEventInsecure = cache(async (event: Omit<Event, 'id'>) => {
         _venue_id,
         description,
         tickets,
-        _user_id,
         slug
       ),
     VALUES
@@ -27,7 +30,6 @@ export const createEventInsecure = cache(async (event: Omit<Event, 'id'>) => {
         ${event.venueId},
         ${event.description},
         ${event.tickets},
-        ${event.userId},
         ${event.slug ? event.slug.toLowerCase() : null},
       )
     RETURNING
@@ -40,14 +42,13 @@ export const createEventInsecure = cache(async (event: Omit<Event, 'id'>) => {
       events._venue_id,
       events.description,
       events.tickets,
-      events._user_id
   `;
   return newEvent;
 });
 
 // retrieves all events from the database
 export const getAllEventsInsecure = cache(async () => {
-  const event = await sql<fullEvent[]>`
+  const event = await sql<FullEvent[]>`
     SELECT
       events.id AS event_id,
       events.name AS event_name,
@@ -72,7 +73,7 @@ export const getAllEventsInsecure = cache(async () => {
 
 // retrieves an event from the database by id
 export const getSingleEventByIdInsecure = cache(async (id: number) => {
-  const [event] = await sql<fullEvent[]>`
+  const [event] = await sql<FullEvent[]>`
     SELECT
       events.id AS event_id,
       events.name AS event_name,
@@ -116,7 +117,7 @@ export const getSingleEventByNameInsecure = cache(async (name: string) => {
 
 // retrieves all events from the database by sport
 export const getAllEventsBySportInsecure = cache(async (id: number) => {
-  const event = await sql<fullEvent[]>`
+  const event = await sql<FullEvent[]>`
     SELECT
       events.id AS event_id,
       events.name AS event_name,
@@ -143,7 +144,7 @@ export const getAllEventsBySportInsecure = cache(async (id: number) => {
 
 // retrieves all events from the database by venue
 export const getAllEventsByVenueInsecure = cache(async (id: number) => {
-  const event = await sql<fullEvent[]>`
+  const event = await sql<FullEvent[]>`
     SELECT
       events.id AS event_id,
       events.name AS event_name,
@@ -170,7 +171,7 @@ export const getAllEventsByVenueInsecure = cache(async (id: number) => {
 
 // retrieves all events from the database by participant
 export const getAllEventsByParticipantInsecure = cache(async (id: number) => {
-  const event = await sql<fullEvent[]>`
+  const event = await sql<FullEvent[]>`
     SELECT
       events.id AS event_id,
       events.name AS event_name,

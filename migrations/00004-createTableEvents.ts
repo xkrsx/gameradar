@@ -1,20 +1,44 @@
 import type { Sql } from 'postgres';
+import { z } from 'zod';
 
-export type Event = {
-  id: number;
+export const eventSchema = z.object({
+  name: z
+    .string()
+    .min(2, { message: 'Event name must have at least 3 characters.' })
+    .max(255, { message: 'Event name must have maximum 255 characters.' }),
+  sportId: z.number(),
+  part1Id: z.number(),
+  part2Id: z.number(),
+  timeStart: z.string(),
+  venueId: z.number().nullable(),
+  description: z
+    .string()
+    .min(3, {
+      message: 'Event description must have at least 3 characters.',
+    })
+    .nullable(),
+  tickets: z.string().nullable(),
+  slug: z.string().nullable(),
+});
+
+export type NewEvent = {
   name: string;
   sportId: number;
   part1Id: number;
   part2Id: number;
-  timeStart: Date;
+  timeStart: string;
   venueId: number | null;
   description: string | null;
   tickets: string | null;
-  userId: number;
   slug: string | null;
 };
 
-export type fullEvent = Event & {
+export type Event = NewEvent & {
+  id: number;
+  userId: number;
+};
+
+export type FullEvent = Event & {
   sport: string;
   part1: string;
   part2: string;
