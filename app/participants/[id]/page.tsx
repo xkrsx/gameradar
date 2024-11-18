@@ -39,22 +39,22 @@ export default async function ParticipantPage(props: Props) {
       <h1>{singleParticipant.name}</h1>
       All the events of {singleParticipant.name}:
       {!events ? (
-        <div className="event">
+        <div>
           <ul>
             <li>
               <strong>Sorry, no events found in this category</strong>
             </li>
             {/* <li>
-                <Link className="system-link" href="/categories">
+                <Link  href="/categories">
                   Browse categories
                 </Link>
               </li>
               <li>
-                <Link className="system-link" href="/events/add">
+                <Link  href="/events/add">
                   Add event
                 </Link>
 
-                <Link className="system-link" href="/events/find">
+                <Link  href="/events/find">
                   Find event
                 </Link>
               </li> */}

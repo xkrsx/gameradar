@@ -4,25 +4,25 @@ import { getAllEventsInsecure } from '../../database/events';
 export default async function EventsPage() {
   const events = await getAllEventsInsecure();
   return (
-    <div className="wrapper">
+    <div>
       <h1>Browse all events</h1>
-      <div className="events">
+      <div>
         {!events ? (
           <ul>
             <li>
               <strong>Sorry, no events found in this category</strong>
             </li>
             {/* <li>
-                <Link className="system-link" href="/categories">
+                <Link href="/categories">
                   Browse categories
                 </Link>
               </li>
               <li>
-                <Link className="system-link" href="/events/add">
+                <Link href="/events/add">
                   Add event
                 </Link>
 
-                <Link className="system-link" href="/events/find">
+                <Link  href="/events/find">
                   Find event
                 </Link>
               </li> */}

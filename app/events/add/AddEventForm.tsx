@@ -82,11 +82,10 @@ export default function AddEventForm(props: Props) {
   }
 
   return (
-    <div className="wrapper">
+    <div>
       <h1>Add event</h1>
-      <div className="add-event">
+      <div>
         <form
-          className="form"
           onSubmit={async (event) => {
             // eslint error: no preventDefault() even though there is one in called function
             event.preventDefault();
@@ -203,9 +202,7 @@ export default function AddEventForm(props: Props) {
             />
           </label>
           <p>your email is always saved to our database.</p>
-          <button className="button-confirm" disabled={isDisabled}>
-            Add event
-          </button>
+          <button disabled={isDisabled}>Add event</button>
         </form>
         <ErrorMessage>{errorMessage}</ErrorMessage>
       </div>

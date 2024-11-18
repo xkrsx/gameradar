@@ -1,4 +1,4 @@
-// import './globals.scss';
+import './globals.css';
 import type { Metadata } from 'next';
 import Footer from './common/Footer/Footer';
 import Header from './common/Header/Header';
@@ -23,7 +23,7 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body>
-        <div className="wrapper">
+        <div>
           <Header />
           {children}
 

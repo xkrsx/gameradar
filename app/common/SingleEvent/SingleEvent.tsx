@@ -6,16 +6,23 @@ type Props = {
 
 export default function SingleEvent(props: Props) {
   return (
-    <div>
-      <h1>{!props.event.eventName ? 'Game' : props.event.eventName}</h1>
-      <h2>
-        {props.event.part1Name} : {props.event.part2Name}
+    <div className="max-w-lg mx-auto bg-white rounded-lg shadow-lg p-6 space-y-4">
+      <h1 className="text-2xl font-bold text-gray-800">
+        {props.event.eventName || 'Game'}
+      </h1>
+      <h2 className="text-xl text-gray-700">
+        {props.event.part1Name} <span className="text-gray-500">vs</span>{' '}
+        {props.event.part2Name}
       </h2>
-      <p>{props.event.sportName}</p>
-      <p>{String(props.event.eventTimeStart)}</p>
-      <p>{props.event.venueName}</p>
-      <p>{props.event.eventDescription}</p>
-      <p>{props.event.eventTickets} €</p>
+      <p className="text-gray-600 font-semibold">{props.event.sportName}</p>
+      <p className="text-gray-500">
+        {new Date(props.event.eventTimeStart).toLocaleString()}
+      </p>
+      <p className="text-gray-600">{props.event.venueName}</p>
+      <p className="text-gray-700">{props.event.eventDescription}</p>
+      <p className="text-lg font-semibold text-gray-800">
+        {props.event.eventTickets} €
+      </p>
     </div>
   );
 }

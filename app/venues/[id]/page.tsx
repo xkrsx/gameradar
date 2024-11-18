@@ -43,22 +43,22 @@ export default async function VenuePage(props: Props) {
       <h1>{singleVenue.name}</h1>
       All the sports in {singleVenue.name}:
       {!events ? (
-        <div className="venue">
+        <div>
           <ul>
             <li>
               <strong>Sorry, no events found in this venue</strong>
             </li>
             {/* <li>
-                <Link className="system-link" href="/categories">
+                <Link  href="/categories">
                   Browse categories
                 </Link>
               </li>
               <li>
-                <Link className="system-link" href="/venues/add">
+                <Link  href="/venues/add">
                   Add venue
                 </Link>
 
-                <Link className="system-link" href="/venues/find">
+                <Link  href="/venues/find">
                   Find venue
                 </Link>
               </li> */}

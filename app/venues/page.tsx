@@ -4,14 +4,14 @@ import { getAllVenuesInsecure } from '../../database/venues';
 export default async function VenuesPage() {
   const venues = await getAllVenuesInsecure();
   return (
-    <div className="wrapper">
+    <div>
       <h1>Browse all venues</h1>
-      <div className="venues">
+      <div>
         {venues.map((venue) => {
           return (
             <Link key={`id-${venue.id}`} href={`/venues/${venue.id}`}>
-              <div className="venue">
-                <div className="venue-name">{venue.name}</div>
+              <div>
+                <div>{venue.name}</div>
               </div>
             </Link>
           );
