@@ -4,8 +4,9 @@ import Footer from './common/Footer/Footer';
 import Header from './common/Header/Header';
 
 export const metadata: Metadata = {
-  title: 'Eventation',
-  description: 'Eventation description',
+  title: 'GameRadar',
+  description:
+    'GameRadar is a platform for sports enthusiasts to find and create events',
 };
 
 export default function RootLayout({

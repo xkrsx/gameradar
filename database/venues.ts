@@ -27,3 +27,27 @@ export const createVenueInsecure = cache(async (venue: Omit<Venue, 'id'>) => {
   `;
   return newUser;
 });
+
+// retrieves all venues from the database
+export const getAllVenuesInsecure = cache(async () => {
+  const venues = await sql<Venue[]>`
+    SELECT
+      *
+    FROM
+      venues
+  `;
+  return venues;
+});
+
+// retrieves a venue from the database by id
+export const getSingleVenueByIdInsecure = cache(async (id: number) => {
+  const [venue] = await sql<Venue[]>`
+    SELECT
+      *
+    FROM
+      venues
+    WHERE
+      venues.id = ${id}
+  `;
+  return venue;
+});
