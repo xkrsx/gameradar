@@ -18,21 +18,24 @@ export type EventResponseBodyPost =
 export async function POST(
   request: Request,
 ): Promise<NextResponse<EventResponseBodyPost>> {
-  const requestBody: NewEvent & { email: string } = await request.json();
+  const requestBody: NewEvent & { eventUserEmail: string } =
+    await request.json();
 
   console.log('requestBody:', requestBody);
 
-  const newUser = await createUserInsecure(requestBody.email);
+  const newUser = await createUserInsecure(requestBody.eventUserEmail);
 
   console.log('newUser:', newUser);
 
+  const { eventUserEmail, ...remainingRequestBody } = requestBody;
+
   const updatedBody = {
-    ...requestBody,
-    sportId: Number(requestBody.eventSportId),
-    part1Id: Number(requestBody.eventPart1Id),
-    part2Id: Number(requestBody.eventPart2Id),
-    venueId: Number(requestBody.eventVenueId),
-    userId: Number(newUser!.id),
+    ...remainingRequestBody,
+    eventSportId: Number(requestBody.eventSportId),
+    eventPart1Id: Number(requestBody.eventPart1Id),
+    eventPart2Id: Number(requestBody.eventPart2Id),
+    eventVenueId: Number(requestBody.eventVenueId),
+    eventUserId: Number(newUser!.id),
   };
 
   console.log('updatedBody:', updatedBody);
@@ -55,16 +58,16 @@ export async function POST(
   }
 
   const newEvent = await createEventInsecure({
-    eventName: result.data.name,
-    eventSportId: result.data.sportId,
-    eventPart1Id: result.data.part1Id,
-    eventPart2Id: result.data.part2Id,
-    eventTimeStart: result.data.timeStart,
-    eventVenueId: result.data.venueId,
-    eventDescription: result.data.description,
-    eventTickets: result.data.tickets,
-    eventSlug: result.data.slug,
-    eventUserId: result.data.userId,
+    eventName: result.data.eventName,
+    eventSportId: result.data.eventSportId,
+    eventPart1Id: result.data.eventPart1Id,
+    eventPart2Id: result.data.eventPart2Id,
+    eventTimeStart: result.data.eventTimeStart,
+    eventVenueId: result.data.eventVenueId,
+    eventDescription: result.data.eventDescription,
+    eventTickets: result.data.eventTickets,
+    eventSlug: result.data.eventSlug,
+    eventUserId: result.data.eventUserId,
   });
 
   console.log('newEvent:', newEvent);

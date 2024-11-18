@@ -15,16 +15,17 @@ type Props = {
 
 export default function AddEventForm(props: Props) {
   const [newEvent, setNewEvent] = useState({
-    name: '',
-    sportId: 0,
-    part1Id: 0,
-    part2Id: 0,
-    timeStart: '',
-    venueId: 0,
-    description: '',
-    tickets: '',
-    slug: '',
-    email: '',
+    eventName: '',
+    eventSportId: 0,
+    eventPart1Id: 0,
+    eventPart2Id: 0,
+    eventTimeStart: '',
+    eventVenueId: 0,
+    eventDescription: '',
+    eventTickets: '',
+    eventSlug: '',
+    eventUserId: '',
+    eventUserEmail: '',
   });
   const [errorMessage, setErrorMessage] = useState('');
   const [isDisabled, setIsDisabled] = useState(false);
@@ -54,16 +55,16 @@ export default function AddEventForm(props: Props) {
   }
 
   function checkForm() {
-    if (newEvent.name.length < 3) {
+    if (newEvent.eventName.length < 3) {
       setErrorMessage('Event name must have at least 3 characters.');
     }
-    if (newEvent.name.length >= 255) {
+    if (newEvent.eventName.length >= 255) {
       setErrorMessage('Event name must have maximum 255 characters.');
     }
-    if (newEvent.description.length < 3) {
+    if (newEvent.eventDescription.length < 3) {
       setErrorMessage('Event description must have at least 3 characters.');
     }
-    if (newEvent.name.length >= 3 && newEvent.name.length <= 255) {
+    if (newEvent.eventName.length >= 3 && newEvent.eventName.length <= 255) {
       setIsDisabled(false);
     }
   }
@@ -96,14 +97,14 @@ export default function AddEventForm(props: Props) {
             Name
             <input
               required
-              name="name"
-              value={newEvent.name}
+              name="eventName"
+              value={newEvent.eventName}
               onChange={handleChange}
             />
           </label>
           <label>
             Sport
-            <select name="sportId" onChange={handleChange}>
+            <select name="eventSportId" onChange={handleChange}>
               <option defaultValue="true" hidden disabled />
 
               {props.sports.map((sport) => {
@@ -117,7 +118,7 @@ export default function AddEventForm(props: Props) {
           </label>
           <label>
             Participant 1
-            <select name="part1Id" onChange={handleChange}>
+            <select name="eventPart1Id" onChange={handleChange}>
               <option defaultValue="true" hidden disabled />
 
               {props.participants.map((participant) => {
@@ -134,7 +135,7 @@ export default function AddEventForm(props: Props) {
           </label>
           <label>
             Participant 2
-            <select name="part2Id" onChange={handleChange}>
+            <select name="eventPart2Id" onChange={handleChange}>
               <option defaultValue="true" hidden disabled />
 
               {props.participants.map((participant) => {
@@ -155,14 +156,14 @@ export default function AddEventForm(props: Props) {
               aria-label="Date and time"
               type="datetime-local"
               required
-              name="timeStart"
-              value={newEvent.timeStart}
+              name="eventTimeStart"
+              value={newEvent.eventTimeStart}
               onChange={handleChange}
             />
           </label>
           <label>
             Venue
-            <select name="venueId" onChange={handleChange}>
+            <select name="eventVenueId" onChange={handleChange}>
               <option defaultValue="true" hidden disabled />
 
               {props.venues.map((venue) => {
@@ -177,26 +178,27 @@ export default function AddEventForm(props: Props) {
           <label>
             Tickets €
             <input
-              name="tickets"
+              name="eventTickets"
               type="number"
-              value={newEvent.tickets}
+              value={newEvent.eventTickets}
               onChange={handleChange}
             />
           </label>
           <label>
             Description
             <input
-              name="description"
+              name="eventDescription"
               required
-              value={newEvent.description}
+              value={newEvent.eventDescription}
               onChange={handleChange}
             />
           </label>
           <label>
             your email
             <input
-              name="email"
-              value={newEvent.email}
+              type="email"
+              name="eventUserEmail"
+              value={newEvent.eventUserEmail}
               onChange={handleChange}
             />
           </label>

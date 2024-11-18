@@ -2,24 +2,24 @@ import type { Sql } from 'postgres';
 import { z } from 'zod';
 
 export const eventSchema = z.object({
-  name: z
+  eventName: z
     .string()
     .min(2, { message: 'Event name must have at least 3 characters.' })
     .max(255, { message: 'Event name must have maximum 255 characters.' }),
-  sportId: z.number(),
-  part1Id: z.number(),
-  part2Id: z.number(),
-  timeStart: z.string(),
-  venueId: z.number().nullable(),
-  description: z
+  eventSportId: z.number(),
+  eventPart1Id: z.number(),
+  eventPart2Id: z.number(),
+  eventTimeStart: z.string(),
+  eventVenueId: z.number().nullable(),
+  eventDescription: z
     .string()
     .min(3, {
       message: 'Event description must have at least 3 characters.',
     })
     .nullable(),
-  tickets: z.string().nullable(),
-  slug: z.string().nullable(),
-  userId: z.number(),
+  eventTickets: z.string().nullable(),
+  eventSlug: z.string().nullable(),
+  eventUserId: z.number(),
 });
 
 export type NewEvent = {
@@ -44,7 +44,8 @@ export type FullEvent = Event & {
   part1Name: string;
   part2Name: string;
   venueName: string;
-  userUsername: string;
+  userUsername?: string;
+  eventUserEmail: string;
 };
 
 export async function up(sql: Sql) {
