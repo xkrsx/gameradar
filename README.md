@@ -86,12 +86,6 @@ sudo -u <user name> psql -U <user name> <database name>
 
 ## Run Tests
 
-To run unit tests with Jest, use the following command:
-
-```bash
-pnpm jest
-```
-
 To run end-to-end tests with Playwright, use the following command:
 
 ```bash
