@@ -124,10 +124,10 @@ sudo -u <user name> psql -U <user name> <database name>
 
 **Migrations:**
 
-Project includes dummy data that has to be inserted to newly created database.
+Project includes dummy data that has to be inserted to newly created database. It can be easily done using ley's script:
 
 ```bash
-pnpm migration up
+pnpm migrate up
 ```
 
 ## Run Tests
