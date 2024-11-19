@@ -142,8 +142,9 @@ pnpm playwright test
 1. authentication / authorization (users profile with custom username and hashed password, sql create prompt already exists)
 2. adding new: sports, participants, venues by users (sql create prompts already exist)
 3. adding address completion, eg. MapBox API for new venues (location, latitude and longitude fields in sql already exist)
-4. adding Stripe API for payment of tickets
-5. generating .ics files to save specific event in user's calendar
+4. verification of user-added data: individual athlete vs individual athlete, club vs club, sport type matches participants etc.
+5. adding Stripe API for payment of tickets
+6. generating .ics files to save specific event in user's calendar
 
 ## Additional notes
 
