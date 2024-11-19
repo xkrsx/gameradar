@@ -59,14 +59,16 @@ export async function POST(
   }
 
   const newEvent = await createEventInsecure({
-    eventName: result.data.eventName,
+    eventName: result.data.eventName ?? '',
     eventSportId: result.data.eventSportId,
     eventPart1Id: result.data.eventPart1Id,
     eventPart2Id: result.data.eventPart2Id,
     eventTimeStart: result.data.eventTimeStart,
     eventVenueId: result.data.eventVenueId,
     eventDescription: result.data.eventDescription,
-    eventTickets: result.data.eventTickets,
+    eventTickets: result.data.eventTickets
+      ? Number(result.data.eventTickets)
+      : null,
     eventSlug: result.data.eventSlug,
     eventUserId: result.data.eventUserId,
   });
