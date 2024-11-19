@@ -41,7 +41,7 @@ export default async function VenuePage(props: Props) {
   return (
     <div>
       <h1>{singleVenue.name}</h1>
-      All the sports in {singleVenue.name}:
+      All the events in {singleVenue.name}:
       {!events ? (
         <div>
           <ul>
