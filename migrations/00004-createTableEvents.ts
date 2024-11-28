@@ -2,15 +2,15 @@ import type { Sql } from 'postgres';
 import { z } from 'zod';
 
 export const eventSchema = z.object({
-  eventName: z.string().optional(),
-  eventSportId: z.number(),
-  eventPart1Id: z.number(),
-  eventPart2Id: z.number(),
-  eventTimeStart: z.string(),
-  eventVenueId: z.number().nullable(),
-  eventDescription: z.string().nullable(),
-  eventTickets: z.string().nullable(),
-  eventUserId: z.number(),
+  name: z.string().optional(),
+  sportId: z.number(),
+  part1Id: z.number(),
+  part2Id: z.number(),
+  timeStart: z.date(),
+  venueId: z.number().nullable(),
+  description: z.string().nullable(),
+  tickets: z.string().nullable(),
+  userId: z.number(),
 });
 
 export type NewEvent = {

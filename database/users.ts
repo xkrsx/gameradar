@@ -13,7 +13,7 @@ export const createUserInsecure = cache(async (email: string) => {
       )
     VALUES
       (
-        ${email.toLowerCase()},
+        ${email},
         '',
         ''
       )
@@ -35,7 +35,7 @@ export const getUserByEmailInsecure = cache(async (email: string) => {
     FROM
       users
     WHERE
-      email = ${email.toLowerCase()}
+      email = ${email}
   `;
   return user;
 });
