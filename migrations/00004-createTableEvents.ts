@@ -10,34 +10,41 @@ export const eventSchema = z.object({
   eventVenueId: z.number().nullable(),
   eventDescription: z.string().nullable(),
   eventTickets: z.string().nullable(),
-  eventSlug: z.string().nullable(),
   eventUserId: z.number(),
 });
 
 export type NewEvent = {
-  eventName: string;
-  eventSportId: number;
-  eventPart1Id: number;
-  eventPart2Id: number;
-  eventTimeStart: string;
-  eventVenueId: number | null;
-  eventDescription: string | null;
-  eventTickets: number | null;
-  eventSlug: string | null;
-  eventUserId: number;
+  name: string | null;
+  sportId: number;
+  part1Id: number;
+  part2Id: number;
+  timeStart: Date;
+  venueId: number;
+  description: string | null;
+  tickets: string | null;
+  userId: number;
 };
 
 export type Event = NewEvent & {
-  eventId: number;
+  id: number;
 };
 
-export type FullEvent = Event & {
-  sportName: string;
-  part1Name: string;
-  part2Name: string;
-  venueName: string;
-  userUsername?: string;
-  eventUserEmail: string;
+export type FullEvent = {
+  eventId: number;
+  eventName: string | null;
+  eventSportId: number;
+  eventPart1Id: number;
+  eventPart2Id: number;
+  eventTimeStart: Date;
+  eventVenueId: number;
+  eventDescription: string | null;
+  eventTickets: string | null;
+  eventUserId: number;
+  sportName: string | null;
+  part1Name: string | null;
+  part2Name: string | null;
+  venueName: string | null;
+  userUsername: string | null;
 };
 
 export async function up(sql: Sql) {

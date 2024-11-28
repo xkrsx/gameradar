@@ -12,8 +12,8 @@ export async function generateMetadata(props: Props) {
   }
 
   return {
-    title: singleEvent,
-    description: `Single Event Page: ${singleEvent}`,
+    title: singleEvent.eventName,
+    description: `Single Event Page: ${singleEvent.eventName ? singleEvent.eventName : `${singleEvent.part1Name} vs ${singleEvent.part2Name}`}`,
   };
 }
 
