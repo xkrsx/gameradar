@@ -5,6 +5,7 @@ import { type ChangeEvent, useState } from 'react';
 import type { Sport } from '../../../migrations/00001-createTableSports';
 import type { Venue } from '../../../migrations/00002-createTableVenues';
 import type { Participant } from '../../../migrations/00003-createTableParticipants';
+import type { FullEvent } from '../../../migrations/00004-createTableEvents';
 import ErrorMessage from '../../ErrorMessage';
 
 type Props = {
@@ -28,7 +29,6 @@ export default function AddEventForm(props: Props) {
     eventUserEmail: '',
   });
   const [errorMessage, setErrorMessage] = useState('');
-  const [isDisabled, setIsDisabled] = useState(false);
 
   const router = useRouter();
 
@@ -42,14 +42,14 @@ export default function AddEventForm(props: Props) {
         'Content-Type': 'application/json',
       },
     });
-    const data = await response.json();
+    const data: FullEvent = await response.json();
 
     if ('errors' in data) {
       setErrorMessage(String(data.errors));
       return;
     }
     if ('event' in data) {
-      router.push(`/events/${data.event.id}`);
+      router.push(`/events/${data.eventId}`);
     }
   }
 
@@ -85,7 +85,6 @@ export default function AddEventForm(props: Props) {
           <input
             id="eventName"
             name="eventName"
-            type="text"
             value={newEvent.eventName}
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -242,7 +241,6 @@ export default function AddEventForm(props: Props) {
           <input
             id="eventDescription"
             name="eventDescription"
-            type="text"
             value={newEvent.eventDescription}
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -267,11 +265,7 @@ export default function AddEventForm(props: Props) {
           />
         </div>
 
-        <button
-          type="submit"
-          disabled={isDisabled}
-          className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition duration-200 disabled:bg-gray-400"
-        >
+        <button className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition duration-200 disabled:bg-gray-400">
           Add Event
         </button>
       </form>

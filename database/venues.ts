@@ -9,21 +9,22 @@ export const createVenueInsecure = cache(async (venue: Omit<Venue, 'id'>) => {
         name,
         location,
         latitude,
-        longitude,
-        slug
-      ),
+        longitude
+      )
     VALUES
       (
         ${venue.name.toLowerCase()},
         ${venue.location},
         ${venue.latitude},
-        ${venue.longitude},
-        ${venue.slug ? venue.slug.toLowerCase() : null},
+        ${venue.longitude}
       )
     RETURNING
       venues.id,
       venues.name,
-      venues.location
+      venues.location,
+      venues.latitude,
+      venues.longitude,
+      venues.slug
   `;
   return newUser;
 });

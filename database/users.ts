@@ -19,7 +19,8 @@ export const createUserInsecure = cache(async (email: string) => {
       )
     RETURNING
       users.id,
-      users.email
+      users.email,
+      users.created_at
   `;
   return newUser;
 });
@@ -29,7 +30,8 @@ export const getUserByEmailInsecure = cache(async (email: string) => {
   const [user] = await sql<Guest[]>`
     SELECT
       users.id,
-      users.email
+      users.email,
+      users.created_at
     FROM
       users
     WHERE

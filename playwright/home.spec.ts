@@ -4,17 +4,19 @@ test('navigation test', async ({ page }) => {
   await page.goto('/');
 
   await expect(page.getByRole('img', { name: 'GameRadar Logo' })).toBeVisible();
-  expect(
+  await expect(
     page.getByRole('link', { name: 'Check all the Events' }),
   ).toBeVisible();
-  expect(page.getByRole('link', { name: 'Add your own Event' })).toBeVisible();
-  expect(
+  await expect(
+    page.getByRole('link', { name: 'Add your own Event' }),
+  ).toBeVisible();
+  await expect(
     page.getByRole('link', { name: 'Browse list of all Sports' }),
   ).toBeVisible();
-  expect(
+  await expect(
     page.getByRole('link', { name: 'Looking for Athletes / Clubs?' }),
   ).toBeVisible();
-  expect(
+  await expect(
     page.getByRole('link', { name: 'See events happening in each' }),
   ).toBeVisible();
 });

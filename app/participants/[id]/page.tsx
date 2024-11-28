@@ -32,50 +32,23 @@ export default async function ParticipantPage(props: Props) {
   if (!singleParticipant) {
     notFound();
   }
-  const events = await getAllEventsByParticipantInsecure(singleParticipant.id!);
+  const events = await getAllEventsByParticipantInsecure(singleParticipant.id);
 
   return (
     <div>
       <h1>{singleParticipant.name}</h1>
       All the events of {singleParticipant.name}:
-      {!events ? (
-        <div>
-          <ul>
-            <li>
-              <strong>Sorry, no events found in this category</strong>
-            </li>
-            {/* <li>
-                <Link  href="/categories">
-                  Browse categories
-                </Link>
-              </li>
-              <li>
-                <Link  href="/events/add">
-                  Add event
-                </Link>
-
-                <Link  href="/events/find">
-                  Find event
-                </Link>
-              </li> */}
-          </ul>
-        </div>
-      ) : (
-        <ul>
-          {events.map((event) => (
-            <li>
-              <Link
-                key={`id-${event.eventId}`}
-                href={`/events/${event.eventId}`}
-              >
-                {!event.eventName
-                  ? `Game ${event.part1Name} vs ${event.part2Name}`
-                  : event.eventName}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
+      <ul>
+        {events.map((event) => (
+          <li key={`id-${event.eventId}`}>
+            <Link href={`/events/${event.eventId}`}>
+              {!event.eventName
+                ? `Game ${event.part1Name} vs ${event.part2Name}`
+                : event.eventName}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
