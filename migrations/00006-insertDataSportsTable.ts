@@ -1,7 +1,7 @@
 import type { Sql } from 'postgres';
 import type { Sport } from './00001-createTableSports';
 
-export const sports: Sport[] = [
+export const sports: Omit<Sport, 'id'>[] = [
   { name: 'Archery', slug: 'archery' },
   { name: 'Badminton', slug: 'badminton' },
   { name: 'Baseball', slug: 'baseball' },

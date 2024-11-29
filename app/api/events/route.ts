@@ -18,30 +18,34 @@ export type EventResponseBodyPost =
 export async function POST(
   request: Request,
 ): Promise<NextResponse<EventResponseBodyPost>> {
-  const requestBody: NewEvent & { eventUserEmail: string } =
-    await request.json();
+  const requestBody: NewEvent & { userEmail: string } = await request.json();
+
+  console.log('requestBody:', requestBody);
 
   let newUser = undefined;
 
-  const checkUserEmail = await getUserByEmailInsecure(
-    requestBody.eventUserEmail,
-  );
+  const checkUserEmail = await getUserByEmailInsecure(requestBody.userEmail);
   if (!checkUserEmail) {
-    newUser = (await createUserInsecure(requestBody.eventUserEmail))!.id;
+    newUser = (await createUserInsecure(requestBody.userEmail))!.id;
   } else {
     newUser = checkUserEmail.id;
   }
 
-  const { eventUserEmail, ...remainingRequestBody } = requestBody;
+  const { userEmail, ...remainingRequestBody } = requestBody;
+
+  console.log('requestBody 2:', requestBody);
 
   const updatedBody = {
     ...remainingRequestBody,
-    eventSportId: Number(requestBody.eventSportId),
-    eventPart1Id: Number(requestBody.eventPart1Id),
-    eventPart2Id: Number(requestBody.eventPart2Id),
-    eventVenueId: Number(requestBody.eventVenueId),
-    eventUserId: Number(newUser),
+    sportId: Number(requestBody.sportId),
+    part1Id: Number(requestBody.part1Id),
+    part2Id: Number(requestBody.part2Id),
+    timeStart: new Date(requestBody.timeStart),
+    venueId: Number(requestBody.venueId),
+    userId: Number(newUser),
   };
+
+  console.log('updatedBody:', updatedBody);
 
   // Validation schema for request body
   const result = eventSchema.safeParse(updatedBody);
@@ -59,19 +63,18 @@ export async function POST(
   }
 
   const newEvent = await createEventInsecure({
-    eventName: result.data.eventName ?? '',
-    eventSportId: result.data.eventSportId,
-    eventPart1Id: result.data.eventPart1Id,
-    eventPart2Id: result.data.eventPart2Id,
-    eventTimeStart: result.data.eventTimeStart,
-    eventVenueId: result.data.eventVenueId,
-    eventDescription: result.data.eventDescription,
-    eventTickets: result.data.eventTickets
-      ? Number(result.data.eventTickets)
-      : null,
-    eventSlug: result.data.eventSlug,
-    eventUserId: result.data.eventUserId,
+    name: result.data.name as string,
+    sportId: result.data.sportId,
+    part1Id: result.data.part1Id,
+    part2Id: result.data.part2Id,
+    timeStart: new Date(result.data.timeStart),
+    venueId: result.data.venueId as number,
+    description: result.data.description,
+    tickets: result.data.tickets ?? null,
+    userId: result.data.userId,
   });
+
+  console.log('newEvent:', newEvent);
 
   if (!newEvent) {
     return NextResponse.json(

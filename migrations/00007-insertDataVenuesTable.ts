@@ -1,8 +1,7 @@
 import type { Sql } from 'postgres';
 import type { Venue } from './00002-createTableVenues';
-import type { Participant } from './00003-createTableParticipants';
 
-const venues: Venue[] = [
+const venues: Omit<Venue, 'id'>[] = [
   { name: 'TBA', location: 'TBA', latitude: '', longitude: '', slug: null },
 
   {

@@ -1,7 +1,7 @@
 import type { Sql } from 'postgres';
 
 export type Sport = {
-  id?: number;
+  id: number;
   name: string;
   slug: string | null;
 };

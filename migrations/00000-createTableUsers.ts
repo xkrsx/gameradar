@@ -4,14 +4,14 @@ import { z } from 'zod';
 export type Guest = {
   id: number;
   email: string;
-  createdAt: string;
+  createdAt: Date;
 };
 
 export type NewUser = {
   id?: number;
   username: string;
   email: string;
-  createdAt: string;
+  createdAt: Date;
 };
 
 export const guestSchema = z.object({

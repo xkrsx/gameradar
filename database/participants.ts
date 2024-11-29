@@ -10,23 +10,21 @@ export const createParticipantInsecure = cache(
           name,
           team,
           _sport_id,
-          _venue_id,
-          slug
-        ),
+          _venue_id
+        )
       VALUES
         (
           ${participant.name.toLocaleLowerCase()},
           ${participant.team},
           ${participant.sportId},
-          ${participant.venueId},
-          ${participant.slug ? participant.slug.toLowerCase() : null},
+          ${participant.venueId}
         )
       RETURNING
         participants.id,
         participants.name,
         participants.team,
-        participants._sport_id,
-        participants._venue_id
+        participants._sport_id AS sport_id,
+        participants._venue_id AS venue_id
     `;
     return newParticipant;
   },
@@ -39,8 +37,8 @@ export const getAllParticipantsInsecure = cache(async () => {
       participants.id,
       participants.name,
       participants.team,
-      participants._sport_id,
-      participants._venue_id
+      participants._sport_id AS sport_id,
+      participants._venue_id AS venue_id
     FROM
       participants
   `;
@@ -54,8 +52,8 @@ export const getSingleParticipantByIdInsecure = cache(async (id: number) => {
       participants.id,
       participants.name,
       participants.team,
-      participants._sport_id,
-      participants._venue_id
+      participants._sport_id AS sport_id,
+      participants._venue_id AS venue_id
     FROM
       participants
     WHERE
@@ -72,8 +70,8 @@ export const getSingleParticipantByNameInsecure = cache(
         participants.id,
         participants.name,
         participants.team,
-        participants._sport_id,
-        participants._venue_id
+        participants._sport_id AS sport_id,
+        participants._venue_id AS venue_id
       FROM
         participants
       WHERE

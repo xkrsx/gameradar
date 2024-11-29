@@ -1,12 +1,11 @@
 import type { Sql } from 'postgres';
 
 export type Participant = {
-  id?: number;
+  id: number;
   name: string;
   team: boolean;
   sportId: number;
   venueId: number | null;
-  slug: string | null;
 };
 
 export async function up(sql: Sql) {

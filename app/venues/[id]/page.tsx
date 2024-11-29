@@ -1,11 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getAllEventsByVenueInsecure } from '../../../database/events';
-import {
-  getAllVenuesInsecure,
-  getSingleVenueByIdInsecure,
-} from '../../../database/venues';
-import SingleEvent from '../../common/SingleEvent/SingleEvent';
+import { getSingleVenueByIdInsecure } from '../../../database/venues';
 
 export async function generateMetadata(props: Props) {
   const singleVenue = await getSingleVenueByIdInsecure(
@@ -36,50 +32,23 @@ export default async function VenuePage(props: Props) {
   if (!singleVenue) {
     notFound();
   }
-  const events = await getAllEventsByVenueInsecure(singleVenue.id!);
+  const events = await getAllEventsByVenueInsecure(singleVenue.id);
 
   return (
     <div>
       <h1>{singleVenue.name}</h1>
       All the events in {singleVenue.name}:
-      {!events ? (
-        <div>
-          <ul>
-            <li>
-              <strong>Sorry, no events found in this venue</strong>
-            </li>
-            {/* <li>
-                <Link  href="/categories">
-                  Browse categories
-                </Link>
-              </li>
-              <li>
-                <Link  href="/venues/add">
-                  Add venue
-                </Link>
-
-                <Link  href="/venues/find">
-                  Find venue
-                </Link>
-              </li> */}
-          </ul>
-        </div>
-      ) : (
-        <ul>
-          {events.map((event) => (
-            <li>
-              <Link
-                key={`id-${event.eventId}`}
-                href={`/events/${event.eventId}`}
-              >
-                {!event.eventName
-                  ? `Game ${event.part1Name} vs ${event.part2Name}`
-                  : event.eventName}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
+      <ul>
+        {events.map((event) => (
+          <li key={`id-${event.eventId}`}>
+            <Link href={`/events/${event.eventId}`}>
+              {!event.eventName
+                ? `Game ${event.part1Name} vs ${event.part2Name}`
+                : event.eventName}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

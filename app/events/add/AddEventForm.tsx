@@ -5,6 +5,7 @@ import { type ChangeEvent, useState } from 'react';
 import type { Sport } from '../../../migrations/00001-createTableSports';
 import type { Venue } from '../../../migrations/00002-createTableVenues';
 import type { Participant } from '../../../migrations/00003-createTableParticipants';
+import type { Event } from '../../../migrations/00004-createTableEvents';
 import ErrorMessage from '../../ErrorMessage';
 
 type Props = {
@@ -15,20 +16,18 @@ type Props = {
 
 export default function AddEventForm(props: Props) {
   const [newEvent, setNewEvent] = useState({
-    eventName: '',
-    eventSportId: 0,
-    eventPart1Id: 0,
-    eventPart2Id: 0,
-    eventTimeStart: '',
-    eventVenueId: 0,
-    eventDescription: '',
-    eventTickets: '',
-    eventSlug: '',
-    eventUserId: '',
-    eventUserEmail: '',
+    name: '',
+    sportId: 0,
+    part1Id: 0,
+    part2Id: 0,
+    timeStart: '',
+    venueId: 0,
+    description: '',
+    tickets: '',
+    userId: '',
+    userEmail: '',
   });
   const [errorMessage, setErrorMessage] = useState('');
-  const [isDisabled, setIsDisabled] = useState(false);
 
   const router = useRouter();
 
@@ -42,7 +41,9 @@ export default function AddEventForm(props: Props) {
         'Content-Type': 'application/json',
       },
     });
-    const data = await response.json();
+    const data = (await response.json()) as { event: Event; errors?: string };
+
+    console.log('data:', data);
 
     if ('errors' in data) {
       setErrorMessage(String(data.errors));
@@ -77,16 +78,15 @@ export default function AddEventForm(props: Props) {
         <div>
           Required fields *
           <label
-            htmlFor="eventName"
+            htmlFor="name"
             className="block text-lg font-medium text-gray-600 mb-2"
           >
             Event Name
           </label>
           <input
-            id="eventName"
-            name="eventName"
-            type="text"
-            value={newEvent.eventName}
+            id="name"
+            name="name"
+            value={newEvent.name}
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
@@ -94,14 +94,14 @@ export default function AddEventForm(props: Props) {
 
         <div>
           <label
-            htmlFor="eventSportId"
+            htmlFor="sportId"
             className="block text-lg font-medium text-gray-600 mb-2"
           >
             Sport *
           </label>
           <select
-            id="eventSportId"
-            name="eventSportId"
+            id="sportId"
+            name="sportId"
             onChange={handleChange}
             required
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -119,14 +119,14 @@ export default function AddEventForm(props: Props) {
 
         <div>
           <label
-            htmlFor="eventPart1Id"
+            htmlFor="part1Id"
             className="block text-lg font-medium text-gray-600 mb-2"
           >
             Athlete / Club *
           </label>
           <select
-            id="eventPart1Id"
-            name="eventPart1Id"
+            id="part1Id"
+            name="part1Id"
             onChange={handleChange}
             required
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -147,14 +147,14 @@ export default function AddEventForm(props: Props) {
 
         <div>
           <label
-            htmlFor="eventPart2Id"
+            htmlFor="part2Id"
             className="block text-lg font-medium text-gray-600 mb-2"
           >
             Athlete / Club *
           </label>
           <select
-            id="eventPart2Id"
-            name="eventPart2Id"
+            id="part2Id"
+            name="part2Id"
             onChange={handleChange}
             required
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -175,16 +175,16 @@ export default function AddEventForm(props: Props) {
 
         <div>
           <label
-            htmlFor="eventTimeStart"
+            htmlFor="timeStart"
             className="block text-lg font-medium text-gray-600 mb-2"
           >
             Start Time *
           </label>
           <input
-            id="eventTimeStart"
-            name="eventTimeStart"
+            id="timeStart"
+            name="timeStart"
             type="datetime-local"
-            value={newEvent.eventTimeStart}
+            value={newEvent.timeStart}
             onChange={handleChange}
             required
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
@@ -193,14 +193,14 @@ export default function AddEventForm(props: Props) {
 
         <div>
           <label
-            htmlFor="eventVenueId"
+            htmlFor="venueId"
             className="block text-lg font-medium text-gray-600 mb-2"
           >
             Venue
           </label>
           <select
-            id="eventVenueId"
-            name="eventVenueId"
+            id="venueId"
+            name="venueId"
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
@@ -217,16 +217,16 @@ export default function AddEventForm(props: Props) {
 
         <div>
           <label
-            htmlFor="eventTickets"
+            htmlFor="tickets"
             className="block text-lg font-medium text-gray-600 mb-2"
           >
             Tickets (€)
           </label>
           <input
-            id="eventTickets"
-            name="eventTickets"
+            id="tickets"
+            name="tickets"
             type="number"
-            value={newEvent.eventTickets}
+            value={newEvent.tickets}
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
@@ -234,16 +234,15 @@ export default function AddEventForm(props: Props) {
 
         <div>
           <label
-            htmlFor="eventDescription"
+            htmlFor="description"
             className="block text-lg font-medium text-gray-600 mb-2"
           >
             Event Description
           </label>
           <input
-            id="eventDescription"
-            name="eventDescription"
-            type="text"
-            value={newEvent.eventDescription}
+            id="description"
+            name="description"
+            value={newEvent.description}
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
@@ -251,27 +250,23 @@ export default function AddEventForm(props: Props) {
 
         <div>
           <label
-            htmlFor="eventUserEmail"
+            htmlFor="userEmail"
             className="block text-lg font-medium text-gray-600 mb-2"
           >
             Your Email *
           </label>
           <input
-            id="eventUserEmail"
-            name="eventUserEmail"
+            id="userEmail"
+            name="userEmail"
             type="email"
             required
-            value={newEvent.eventUserEmail}
+            value={newEvent.userEmail}
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
-        <button
-          type="submit"
-          disabled={isDisabled}
-          className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition duration-200 disabled:bg-gray-400"
-        >
+        <button className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition duration-200 disabled:bg-gray-400">
           Add Event
         </button>
       </form>
